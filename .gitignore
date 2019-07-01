@@ -5,6 +5,8 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+!**/src/main/resources/*.properties
+
 ### STS ###
 .apt_generated
 .classpath
