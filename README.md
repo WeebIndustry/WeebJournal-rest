@@ -10,7 +10,7 @@
 
 The community for anime artisan, a future sekai of Weebs!
 
-As you can see, this repo is just the microservices of the web and no front-end codes related here. The front-end one is located in [WeebJournal-fe](https://github.com/HarryCoder-Workshop/WeebJournal-fe)
+As you can see, this repo is just the rest api of the web and no front-end codes related here. The front-end one is located in [WeebJournal-fe](https://github.com/HarryCoder-Workshop/WeebJournal-fe)
 
 ## Tech stack
 
@@ -21,18 +21,18 @@ As you can see, this repo is just the microservices of the web and no front-end 
 
 ## Getting Started
 
-Tools:
+1. Tools:
 
 - IDE or text editor.
 - Postgresql
 - Postman or httpie: Testing RestAPI
 - Docker and Kubernetes (currently we don't support containerlization, but prepare it)
 
+2. How to contribute to this repo
 
-Follow these steps:
-1. Fork this repo then [clone](https://help.github.com/en/articles/cloning-a-repository) it.
-2. Open it in your favorite IDE: IntelliJ, VSCode, Eclipse, Netbeans,...
-3. Whenever you've done your work, push the commit to github and create a pull request if you like. 
+- Fork this repo to your own one
+- Create a new branch which follows this format `wj-<YourName>-<pull_request_name_or_some_tag_you_want>`. For example: `wj-Aragami1408-add_sharing_post_feature`
+- While you done your work, make the pull request to this repo
 
 ## Contributing
 
