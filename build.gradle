@@ -26,6 +26,7 @@ dependencies {
 	implementation 'io.github.openfeign:feign-gson:10.2.3'
 	implementation 'io.github.openfeign:feign-okhttp:10.2.3'
 	implementation 'io.github.openfeign:feign-slf4j:10.2.3'
+	implementation 'org.modelmapper:modelmapper:2.3.3'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'

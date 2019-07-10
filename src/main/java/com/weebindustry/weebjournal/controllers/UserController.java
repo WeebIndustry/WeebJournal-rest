@@ -5,15 +5,13 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import com.weebindustry.weebjournal.dtos.UserLoginDTO;
-import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
+import com.weebindustry.weebjournal.dtos.users.*;
 import com.weebindustry.weebjournal.models.User;
 import com.weebindustry.weebjournal.repositories.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,29 +40,47 @@ public class UserController {
             ResponseEntity.badRequest().build();
         }
 
-        
-
         return ResponseEntity.ok(result.get());
     }
+
 
     @PostMapping("/")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(repo.save(user));
     }
 
+
     @PostMapping("/login")
-    public User loginValidation(@Valid @RequestBody UserLoginDTO dto) {
+    public ResponseEntity<User> loginValidation(@Valid @RequestBody UserLoginDTO dto) {
         Optional<User> result = repo.loginValidation(dto.getUsername(), dto.getPassword());
 
+        if(!result.isPresent()) {
+            log.error("Login failed from user: {}", dto.getUsername());
+            ResponseEntity.badRequest().build();
+        }
         
+        return ResponseEntity.ok(result.get());
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> userRegistration(@Valid @RequestBody UserRegistrationDTO dto) {
+        User user = new User();
+
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setEmail(dto.getEmail());
+        user.setDisplayname(dto.getDisplayname());
+        user.setBiography(dto.getBiography());
+        user.setDateOfBirth(dto.getDateOfBirth());
+
+        return ResponseEntity.ok(repo.save(user));
         
-        return result.orElse(null);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @Valid @RequestBody User user) {
         if (!repo.findById(id).isPresent()) {
-            log.error("Id {} is not existed", id);
+            log.error("Id #{} is not existed", id);
             ResponseEntity.badRequest().build();
         }
 

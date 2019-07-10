@@ -1,4 +1,4 @@
-package com.weebindustry.weebjournal.dtos;
+package com.weebindustry.weebjournal.dtos.users;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

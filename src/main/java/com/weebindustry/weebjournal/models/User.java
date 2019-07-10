@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,30 +32,28 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "username", unique = true)
+    @NotBlank
+    @Column(name = "username")
     private String username;
 
-    @NotNull
-    @Column(name = "password", nullable = false)
+    @NotBlank
+    @Column(name = "password")
     private String password;
 
-    @NotNull
     @Column(name = "joined_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date joinedDate;
 
-    @NotNull
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "biography", nullable = true)
+    @Column(name = "biography")
     private String biography;
 
-    @Column(name = "displayname", nullable = true)
+    @Column(name = "displayname")
     private String displayname;
 
-    @Column(name="date_of_birth", nullable = true)
+    @Column(name="date_of_birth")
     private Date dateOfBirth;
     
 }

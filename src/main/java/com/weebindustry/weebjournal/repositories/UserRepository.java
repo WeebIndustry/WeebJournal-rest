@@ -11,6 +11,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    @Query("select * from users u where u.username = :name and u.password = password")
-    Optional<User> loginValidation(@Param("name") String username, @Param("pass") String password);
+    @Query(value = "select * from users username = ?1 and password = ?2", nativeQuery = true)
+    Optional<User> loginValidation(String username, String password);
 }
