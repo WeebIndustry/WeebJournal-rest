@@ -7,6 +7,11 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.*;
 
 @Data
@@ -14,11 +19,11 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "posts")
-public class Post{
+public class Post {
     
     @Id
-    @GeneratedValue
-    @Column(name = "post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "post_title")
@@ -35,8 +40,4 @@ public class Post{
 
     @Column(name = "saved")
     private int saved;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User users;
-    
 }
