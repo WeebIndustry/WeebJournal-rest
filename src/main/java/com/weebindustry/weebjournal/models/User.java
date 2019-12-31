@@ -1,7 +1,7 @@
 package com.weebindustry.weebjournal.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -55,5 +55,10 @@ public class User implements Serializable{
 
     @Column(name="date_of_birth")
     private Date dateOfBirth;
+
+    @OneToMany(mappedBy="users", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Post> posts;
     
 }
