@@ -3,7 +3,6 @@ package com.weebindustry.weebjournal.models;
 
 import java.util.Date;
 
-import java.util.Date;
 
 import javax.persistence.*;
 
@@ -12,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.*;
+
 import lombok.*;
 
 @Data
@@ -19,8 +20,10 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post extends Audit implements Serializable {
     
+    private static final long serialVersionUID = 7441073095469088061L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -41,10 +44,10 @@ public class Post {
     @Column(name = "saved")
     private int saved;
 
-    @ManyToOne 
-    @JoinColumn(name = "user_id") 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) 
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore 
     private User user;
 
 }

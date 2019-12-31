@@ -23,7 +23,7 @@ import lombok.*;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(value = {"password"})
-public class User implements Serializable{
+public class User extends Audit implements Serializable{
 
     private static final long serialVersionUID = -8544233980065788815L;
 
@@ -56,9 +56,7 @@ public class User implements Serializable{
     @Column(name="date_of_birth")
     private Date dateOfBirth;
 
-    @OneToMany(mappedBy="users", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Post> posts;
     
 }

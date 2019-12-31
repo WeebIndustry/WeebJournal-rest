@@ -17,7 +17,6 @@ import com.weebindustry.weebjournal.models.Post;
 import com.weebindustry.weebjournal.repositories.*;
 
 @RestController
-@RequestMapping("/posts")
 public class PostController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -25,52 +24,39 @@ public class PostController {
     @Autowired
     private PostRepository repo;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Post>> findAll() {
-        return ResponseEntity.ok(repo.findAll());
+    @Autowired
+    private UserRepository userRepo;
+
+    @GetMapping("/users/{id}/posts")
+    public ResponseEntity<Page<Post>> findAllPostsByUserId(@PathVariable(value="id") Long userId, Pageable pageable) {
+        return ResponseEntity.ok(repo.findByUserId(userId, pageable));
     }
 
-    
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> findById(@PathVariable(value = "id") Long id) {
-        
-        Optional<Post> result = repo.findById(id);
-
-        if (!result.isPresent()) {
-            log.error("Post Id {} doesn't exist", id);
-            ResponseEntity.badRequest().build();
-        }
-        
-        return ResponseEntity.ok(result.get());
-        
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> createPost(@PathVariable(value = "id") Long userId, @Valid @RequestBody Post post) {
+        return userRepo.findById(userId).map(user -> {
+            post.setUser(user);
+            return ResponseEntity.ok(repo.save(post));
+        }).orElse(null);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post post) {
-        return ResponseEntity.ok(repo.save(post));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @Valid @RequestBody Post post) {
-        if (!repo.findById(id).isPresent()) {
-            log.error("Post Id {} doesn't exist", id);
+    @PutMapping("/users/{userId}/posts/{postId}")
+    public ResponseEntity<Post> updatePost(@PathVariable(value="userId") Long userId, @PathVariable(value="postId") Long postId, @Valid @RequestBody Post post) {
+        if (!userRepo.findById(userId).isPresent()) {
+            log.error("User Id {} doesn't exist!", userId);
             ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(repo.save(post));
+        return ResponseEntity.ok(repo.findById(postId).map(comment -> {
+            return repo.save(post);
+        }).orElse(null));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long id)
-    {
-        if (!repo.findById(id).isPresent()) {
-            log.error("User Id {} doesn't exist!", id);
-            ResponseEntity.badRequest().build();
-        }
-
-        repo.deleteById(id);
-
-        return ResponseEntity.ok().build();
+    @DeleteMapping("users/{userId}/posts/{postId}")
+    public ResponseEntity<?> deleteComment(@PathVariable(value = "userId") Long userId, @PathVariable(value = "postId") Long postId) {
+        return repo.findByIdAndUserId(postId, userId).map(post -> {
+            repo.delete(post);
+            return ResponseEntity.ok().build();
+        }).orElse(null);
     }
 }
