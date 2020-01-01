@@ -20,10 +20,11 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(value = {"password"})
-public class User extends Audit implements Serializable{
+public class User implements Serializable{
 
     private static final long serialVersionUID = -8544233980065788815L;
 
@@ -57,6 +58,6 @@ public class User extends Audit implements Serializable{
     private Date dateOfBirth;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<Post> posts;
+    private Set<Comment> comments = new HashSet<>();
     
 }

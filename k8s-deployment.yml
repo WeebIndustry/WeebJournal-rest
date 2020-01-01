@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weebjournal
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: weebjournal
+  template:
+    metadata:
+      labels:
+        app: weebjournal
+    spec:
+      containers:
+        - name: weebjournal
+          image: aragami1408/weebjournal
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 1408
+          livenessProbe:
+            httpGet:
+              path: health
+              port: 1408
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 1

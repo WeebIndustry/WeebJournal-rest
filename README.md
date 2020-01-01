@@ -17,7 +17,8 @@ As you can see, this repo is just the rest api of the web and no front-end codes
 - Java
 - Spring Boot
 - Postgresql
-- Docker/Kubernetes
+- Docker + Kubernetes
+- Elasticsearch + Kibana
 
 ## Getting Started
 
@@ -26,13 +27,20 @@ As you can see, this repo is just the rest api of the web and no front-end codes
 - IDE or text editor.
 - Postgresql
 - Postman or httpie: Testing RestAPI
-- Docker and Kubernetes (currently we don't support containerlization, but prepare it)
+- Docker and Kubernetes
 
 2. How to contribute to this repo
 
 - Fork this repo to your own one
 - Create a new branch which follows this format `wj-<YourName>-<pull_request_name_or_some_tag_you_want>`. For example: `wj-Aragami1408-add_sharing_post_feature`
 - While you done your work, make the pull request to this repo
+
+3. How to build and run this?
+
+- Pull the [Docker](https://www.docker.com/) image via [Docker Hub](https://hub.docker.com/r/aragami1408/weebjournal):
+
+- Run the image: `docker run -d -p 5000:1408 weebjournal` and test the API in Postman using `localhost:1408` 
+
 
 ## Contributing
 

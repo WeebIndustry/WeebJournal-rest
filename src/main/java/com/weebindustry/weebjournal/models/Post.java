@@ -18,9 +18,10 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "posts")
-public class Post extends Audit implements Serializable {
+public class Post implements Serializable {
     
     private static final long serialVersionUID = 7441073095469088061L;
 
