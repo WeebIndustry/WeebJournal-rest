@@ -9,21 +9,16 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import lombok.*;
 
-/**
- * The warehouse to store every user that exist in weebjournal
- * 
- * 
- * 
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties(value = {"password"})
 public class User implements Serializable{
 
     private static final long serialVersionUID = -8544233980065788815L;
@@ -58,6 +53,6 @@ public class User implements Serializable{
     private Date dateOfBirth;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Comment> comments = new HashSet<>();
+    private Set<Post> posts = new HashSet<>();
     
 }
