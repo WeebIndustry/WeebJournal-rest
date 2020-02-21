@@ -5,8 +5,13 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.weebindustry.weebjournal.dtos.users.UserCreatableDTO;
+import com.weebindustry.weebjournal.dtos.users.UserUpdatableDTO;
+import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
 import com.weebindustry.weebjournal.models.User;
 import com.weebindustry.weebjournal.repositories.UserRepository;
+import com.weebindustry.weebjournal.util.DTO;
+import com.weebindustry.weebjournal.util.HelperService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,59 +24,37 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     @Autowired
-    private UserRepository repo;
+    private HelperService<User> service;
 
     @GetMapping("/")
     public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
-        return ResponseEntity.ok(repo.findAll(pageable));
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) {
-
-        Optional<User> result = repo.findById(id);
-
-        if (!result.isPresent()) {
-            log.error("User Id {} doesn't exist!", id);
-            ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(result.get());
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(service.findById(id));
     }
 
 
     @PostMapping("/")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(repo.save(user));
+    public ResponseEntity<User> createUser(@Valid @RequestBody @DTO(UserCreatableDTO.class) User user) {
+        return ResponseEntity.ok(service.create(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
-        if (!repo.findById(id).isPresent()) {
-            log.error("User Id {} doesn't exist!", id);
-            ResponseEntity.badRequest().build();
-        }
-
-        
-
-        return ResponseEntity.ok(repo.save(user));
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody @DTO(UserUpdatableDTO.class) User user) {
+        return ResponseEntity.ok(service.update(id, user));
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long id) {
-       if (!repo.findById(id).isPresent()) {
-           log.error("User Id {} doesn't exist!", id);
-           ResponseEntity.badRequest().build();
-       }
-
-        repo.deleteById(id);
-
+        service.delete(id);
         return ResponseEntity.ok().build();
     }
 }
