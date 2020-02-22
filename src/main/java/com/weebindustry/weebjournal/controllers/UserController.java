@@ -1,20 +1,14 @@
 package com.weebindustry.weebjournal.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import com.weebindustry.weebjournal.dtos.users.UserCreatableDTO;
 import com.weebindustry.weebjournal.dtos.users.UserUpdatableDTO;
 import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
 import com.weebindustry.weebjournal.models.User;
-import com.weebindustry.weebjournal.repositories.UserRepository;
 import com.weebindustry.weebjournal.util.DTO;
 import com.weebindustry.weebjournal.util.HelperService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

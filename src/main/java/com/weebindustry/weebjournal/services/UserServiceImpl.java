@@ -2,8 +2,6 @@ package com.weebindustry.weebjournal.services;
 
 import java.util.*;
 
-import javax.xml.ws.Response;
-
 import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
 import com.weebindustry.weebjournal.models.User;
 import com.weebindustry.weebjournal.repositories.UserRepository;
@@ -15,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
-
 public class UserServiceImpl implements HelperService<User> {
 
     @Autowired

@@ -5,11 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import lombok.*;
 
@@ -19,6 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(value = {"password"}, allowGetters = true)
 public class User implements Serializable{
 
     private static final long serialVersionUID = -8544233980065788815L;
