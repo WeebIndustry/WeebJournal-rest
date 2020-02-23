@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -26,6 +26,10 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+
+        if (service.findAll(pageable) == null || service.findAll(pageable).isEmpty()) {
+            ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
