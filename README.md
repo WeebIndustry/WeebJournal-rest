@@ -1,16 +1,17 @@
 © 2019 WeebIndustrial
 
-* [WeebJournal](#weebjournal)
+* [WeebJournal-rest](#weebjournal)
 * [Tech stack](#tech-stack)
 * [Getting Started](#getting-started)
 * [Contributing](#contributing)
 * [Needs for help](#needs-for-help)
 
-# WeebJournal ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat) ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
+# WeebJournal-rest ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat) ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
 
 The community for anime artisan, a future sekai of Weebs!
 
-As you can see, this repo is just the rest api of the web and no front-end codes related here. The front-end one is located in [WeebJournal-fe](https://github.com/WeebIndustry/WeebJournal-fe)
+This is only the RestAPI Microservice of WeebJournal not the entire website! 
+
 
 ## Tech stack
 
@@ -21,23 +22,17 @@ As you can see, this repo is just the rest api of the web and no front-end codes
 - Elasticsearch + Kibana
 - TeamCity
 
+![Tech Stack of WeebJournal-rest](./assets/wjrest-tech-stack.png)
+
 ## Getting Started
 
-1. Tools:
-
-- IDE or text editor.
-- Postgresql
-- Postman or httpie: Testing RestAPI
-- Docker and Kubernetes
-- Elasticsearch (Kibana is optional if you don't need)
-
-2. How to contribute to this repo
+1. How to contribute to this repo
 
 - Fork this repo to your own one
 - Create a new branch which follows this format `wj-<YourName>-<pull_request_name_or_some_tag_you_want>`. For instance: `wj-Aragami1408-add_sharing_post_feature`
-- While you done your work, make the pull request to this repo
+- When you've done your work, create a pull request to this repo
 
-3. How to build and run this?
+2. How to build and run this?
 
 - Pull the [Docker](https://www.docker.com/) image via [Docker Hub](https://hub.docker.com/r/aragami1408/weebjournal):
 
