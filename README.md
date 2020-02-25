@@ -6,7 +6,7 @@
 * [Contributing](#contributing)
 * [Needs for help](#needs-for-help)
 
-# WeebJournal-rest ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat) ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
+# WeebJournal-rest ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
 
 The community for anime artisan, a future sekai of Weebs!
 
