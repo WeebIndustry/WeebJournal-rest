@@ -1,4 +1,4 @@
-© 2019 WeebIndustrial
+© 2019-2020 WeebIndustrial
 
 * [WeebJournal-rest](#weebjournal)
 * [Tech stack](#tech-stack)
