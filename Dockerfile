@@ -1,7 +1,5 @@
 FROM openjdk:8-jdk-alpine
 
-LABEL maintainer="harrycoder1408@gmail.com"
-
 VOLUME /tmp
 
 EXPOSE 1408
