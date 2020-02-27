@@ -1,5 +1,6 @@
 package com.weebindustry.weebjournal.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Tag {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tags")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 
 }

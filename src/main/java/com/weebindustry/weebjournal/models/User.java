@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
@@ -51,6 +52,7 @@ public class User implements Serializable{
     private Date dateOfBirth;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
     
 }

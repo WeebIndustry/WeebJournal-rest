@@ -22,7 +22,11 @@ This is only the RestAPI Microservice of WeebJournal not the entire website!
 - Elasticsearch + Kibana
 - TeamCity
 
-![Tech Stack of WeebJournal-rest](./assets/wjrest-tech-stack.png)
+
+## Getting Started
+
+1. Tools:
+
 
 ## Getting Started
 
