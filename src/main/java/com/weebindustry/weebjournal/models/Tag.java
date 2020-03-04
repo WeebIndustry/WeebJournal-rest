@@ -1,6 +1,9 @@
 package com.weebindustry.weebjournal.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import lombok.Data;
@@ -14,6 +17,9 @@ import java.util.Set;
 @Entity
 @Table(name = "tags")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Tag {
 
     @Id

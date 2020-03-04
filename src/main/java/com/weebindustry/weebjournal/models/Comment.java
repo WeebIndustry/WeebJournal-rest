@@ -3,6 +3,10 @@ package com.weebindustry.weebjournal.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,6 +15,9 @@ import lombok.Data;
 @Entity
 @Table(name = "comments")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
