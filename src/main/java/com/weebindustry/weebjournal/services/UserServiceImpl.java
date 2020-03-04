@@ -11,15 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements HelperService<User> {
 
-    @Autowired
-    private UserRepository repo;
+    private final UserRepository repo;
 
-    
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository repo) {
+        this.passwordEncoder = passwordEncoder;
+        this.repo = repo;
+    }
 
     @Override
     public List<User> list() {
@@ -46,6 +52,7 @@ public class UserServiceImpl implements HelperService<User> {
 
     @Override
     public User create(User type) {
+        type.setPassword(passwordEncoder.encode(type.getPassword()));
         return repo.save(type);
     }
 
