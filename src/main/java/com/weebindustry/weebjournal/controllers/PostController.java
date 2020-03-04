@@ -14,6 +14,7 @@ import com.weebindustry.weebjournal.models.Post;
 import com.weebindustry.weebjournal.util.*;
 
 @RestController
+@RequestMapping("/api/")
 public class PostController {
 
     @Autowired

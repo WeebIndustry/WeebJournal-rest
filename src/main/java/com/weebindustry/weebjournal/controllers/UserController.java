@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,16 +22,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final HelperService<User> service;
 
     @Autowired
-    private HelperService<User> service;
+    public UserController(HelperService<User> service) {
+        this.service = service;
+    }
+
 
     @GetMapping("/")
     public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
-
-        if (service.findAll(pageable) == null || service.findAll(pageable).isEmpty()) {
-            ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
@@ -55,4 +57,6 @@ public class UserController {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
+
+
 }
