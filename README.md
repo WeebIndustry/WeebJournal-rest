@@ -6,12 +6,13 @@
 * [Contributing](#contributing)
 * [Needs for help](#needs-for-help)
 
-# WeebJournal-rest ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
+# WeebJournal-rest 
+---
+![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
 
 The community for anime artisan, a future sekai of Weebs!
 
-This is only the RestAPI Microservice of WeebJournal not the entire website! 
-
+This is the RestAPI Microservice of WeebJournal not the entire website! Visit [WeebIndustry](https://github.com/WeebIndustry) to see more microservices of our site.
 
 ## Tech stack
 
@@ -25,29 +26,15 @@ This is only the RestAPI Microservice of WeebJournal not the entire website!
 
 ## Getting Started
 
-1. Tools:
-
-
-## Getting Started
-
-1. How to contribute to this repo
-
-- Fork this repo to your own one
-- Create a new branch which follows this format `wj-<YourName>-<pull_request_name_or_some_tag_you_want>`. For instance: `wj-Aragami1408-add_sharing_post_feature`
-- When you've done your work, create a pull request to this repo
-
-2. How to build and run this?
-
-- Pull the [Docker](https://www.docker.com/) image via [Docker Hub](https://hub.docker.com/r/aragami1408/weebjournal):
-
-- Run the image: `docker run -d -p 5000:1408 weebjournal` and start using by typing `localhost:1408` at your browser
+Will tell you this later...
 
 
 ## Contributing
 
-You are **free** to do that. I'm very pleasure of your contributions! But this repo is just the backend infrastructure(responses are only JSON) so please do not ask anything related to front-end.
+Since this is an open-source project, we hope to receive all of your contributions. But remember that this is just the RestAPI of the website so any designs are not included. 
+The code might not easy for you to understand so feel free ask us about the code by opening an [Issue](https://github.com/WeebIndustry/WeebJournal-rest/issues).
 
-Obviously, you are prohibited to commit directly in `master` in any kind. Create your own and work for it. After working for a while, you can make pull request(s). We hope to receive lots of pull request from you guys.
+When you done your contribution, create a [Pull Request](https://github.com/WeebIndustry/WeebJournal-rest/pulls) and tell us what have you done and prove that your PR(s) is worthy to be pulled.
 
 ## Needs for help
 
@@ -62,3 +49,6 @@ If your problem quite big and need a serious discussion, github issue is the bes
 [discord server](https://discord.gg/qYp5f5e). This server comprises of:
 - Development changelog at `#announcement channel`
 - progress discussion at `DEV` category.
+
+## License
+Yep. This repo uses `MIT License.`. Please see the [file](/LICENSE) for detail information. TL;DR: You can modify, distribute and privately use our software but you must include this license.
