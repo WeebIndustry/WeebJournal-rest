@@ -1,7 +1,6 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.6.RELEASE'
 	id 'java'
-	id 'com.google.cloud.tools.jib' version '1.8.0'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -18,9 +17,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-	maven {
-		url "https://plugins.gradle.org/m2/"
-	}
 }
 
 dependencies {
@@ -29,7 +25,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.modelmapper:modelmapper:2.3.3'
 	implementation 'com.google.guava:guava:28.2-jre'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt:0.9.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
