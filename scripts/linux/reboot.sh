@@ -12,5 +12,4 @@ java -jar $WJ_JAR_LOCATION --server.port=1408 \
   --spring.jpa.generate-dll=true \
   --spring.jpa.hibernate.dll-auto=update \
   --spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true \
-  --weebjournal.app.jwtSecret=jwtWeebJournalSecretKey \
-  --weebjournal.app.jwtExpiration=86400
+
