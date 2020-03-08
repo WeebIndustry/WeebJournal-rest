@@ -2,24 +2,81 @@ package com.weebindustry.weebjournal.services;
 
 import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
 import com.weebindustry.weebjournal.models.Post;
+import com.weebindustry.weebjournal.models.User;
 import com.weebindustry.weebjournal.repositories.PostRepository;
 import com.weebindustry.weebjournal.repositories.UserRepository;
+import com.weebindustry.weebjournal.util.HelperService;
 import com.weebindustry.weebjournal.util.HelperServiceOneToMany;
 
+import lombok.experimental.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class PostServiceImpl implements HelperServiceOneToMany<Post> {
+public class PostServiceImpl implements HelperService<Post>, HelperServiceOneToMany<Post> {
 
     @Autowired
     private PostRepository postRepo;
 
     @Autowired
     private UserRepository userRepo;
+
+    @Override
+    public List<Post> list() {
+        return postRepo.findAll();
+    }
+
+    @Override
+    public Page<Post> findAll(Pageable pageable) {
+        return postRepo.findAll(pageable);
+    }
+
+    @Override
+    public Post findById(Long id) {
+        Optional<Post> result = postRepo.findById(id);
+
+        if (!result.isPresent()) {
+
+            ResponseEntity.badRequest().build();
+            throw new ResourceNotFoundException("User not found :: " + id);
+        }
+        return result.get();
+    }
+
+    @Override
+    public Post create(Post type) {
+        return postRepo.save(type);
+    }
+
+    @Override
+    public Post update(Long id, Post type) {
+        Optional<Post> result = postRepo.findById(id);
+
+        if (!result.isPresent()) {
+
+            ResponseEntity.badRequest().build();
+            throw new ResourceNotFoundException("User not found :: " + id);
+        }
+        return postRepo.save(type);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!postRepo.findById(id).isPresent()) {
+            ResponseEntity.badRequest().build();
+            throw new ResourceNotFoundException("User not found :: " + id);
+        }
+
+        postRepo.deleteById(id);
+    }
+
+
 
     @Override
     public Page<Post> getManyByOne(Long id, Pageable pageable) {
@@ -54,5 +111,6 @@ public class PostServiceImpl implements HelperServiceOneToMany<Post> {
         }).orElseThrow(() -> new ResourceNotFoundException("Post Id " + idMany + " not found"));
 	}
 
-    
+
+
 }
