@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -22,6 +23,9 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @NaturalId
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     private RoleName name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }

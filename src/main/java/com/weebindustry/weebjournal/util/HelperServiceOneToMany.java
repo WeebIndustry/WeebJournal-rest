@@ -3,9 +3,11 @@ package com.weebindustry.weebjournal.util;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface HelperServiceOneToMany<C> {
-    
+
     Page<C> getManyByOne(Long id, Pageable pageable);
 
     C create(Long id, C type);

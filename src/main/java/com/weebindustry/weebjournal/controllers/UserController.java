@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.weebindustry.weebjournal.dtos.users.UserCreatableDTO;
 import com.weebindustry.weebjournal.dtos.users.UserUpdatableDTO;
+import com.weebindustry.weebjournal.exceptions.RequestParamValueNotDefinedException;
 import com.weebindustry.weebjournal.exceptions.ResourceNotFoundException;
 import com.weebindustry.weebjournal.models.User;
 import com.weebindustry.weebjournal.util.DTO;
@@ -13,14 +14,12 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final HelperService<User> service;
 
@@ -30,9 +29,18 @@ public class UserController {
     }
 
 
-    @GetMapping("/")
-    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
-        return ResponseEntity.ok(service.findAll(pageable));
+    @GetMapping("")
+    public ResponseEntity<?> getAllUsers(Pageable pageable, @RequestParam(required = false, defaultValue = "false") String hasPageable) {
+        if (hasPageable.equals("true")) {
+            return ResponseEntity.ok(service.findAll(pageable));
+        }
+        else if(hasPageable.equals("false")) {
+            return ResponseEntity.ok(service.list());
+        }
+        else {
+            throw new RequestParamValueNotDefinedException("hasPageable", hasPageable);
+        }
+
     }
 
     @GetMapping("/{id}")
@@ -41,7 +49,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<User> createUser(@Valid @RequestBody @DTO(UserCreatableDTO.class) User user) {
         return ResponseEntity.ok(service.create(user));
     }

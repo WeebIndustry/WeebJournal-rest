@@ -34,13 +34,13 @@ public class Post implements Serializable {
     @Column(name = "post_content")
     private String content;
 
-    @Column(name = "date_created")
+    @Column(name = "date_created", columnDefinition = "timestamp default current_timestamp")
     private Date dateCreated;
 
-    @Column(name = "votes")
+    @Column(name = "votes", columnDefinition = "integer default 0")
     private int votes;
 
-    @Column(name = "saved")
+    @Column(name = "saved", columnDefinition = "integer default 0")
     private int saved;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

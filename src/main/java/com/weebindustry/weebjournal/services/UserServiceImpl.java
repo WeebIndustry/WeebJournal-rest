@@ -11,19 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class UserServiceImpl implements HelperService<User> {
 
     private final UserRepository repo;
 
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository repo) {
-        this.passwordEncoder = passwordEncoder;
+    public UserServiceImpl(UserRepository repo) {
         this.repo = repo;
     }
 
@@ -52,7 +51,6 @@ public class UserServiceImpl implements HelperService<User> {
 
     @Override
     public User create(User type) {
-        type.setPassword(passwordEncoder.encode(type.getPassword()));
         return repo.save(type);
     }
 
@@ -78,6 +76,5 @@ public class UserServiceImpl implements HelperService<User> {
 
         repo.deleteById(id);
 	}
-
     
 }

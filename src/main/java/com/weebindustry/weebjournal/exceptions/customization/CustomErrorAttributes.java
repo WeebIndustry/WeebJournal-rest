@@ -26,7 +26,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
             errorAttributes.put("timestamp", dateFormat.format((Date) timestamp));
         }
 
-        errorAttributes.put("version", "1.2");
+        errorAttributes.put("version", "1.0");
 
         return errorAttributes;
     }
