@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/tags/")
 public class TagController {
 
     private final HelperService<Tag> service;
@@ -28,7 +28,7 @@ public class TagController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getAllUsers(Pageable pageable, @RequestParam(required = false, defaultValue = "false") String hasPagable) {
+    public ResponseEntity<?> getAllTags(Pageable pageable, @RequestParam(required = false, defaultValue = "false") String hasPagable) {
         if (hasPagable.equals("true")) {
             return ResponseEntity.ok(service.findAll(pageable));
         }
