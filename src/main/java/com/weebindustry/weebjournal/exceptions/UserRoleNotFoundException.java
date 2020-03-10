@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class UserRoleNotFoundException extends RuntimeException {
