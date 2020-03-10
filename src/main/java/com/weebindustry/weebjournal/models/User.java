@@ -26,7 +26,6 @@ import org.hibernate.annotations.NaturalId;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
-@JsonIgnoreProperties(value = {"password"}, allowGetters = true)
 public class User implements Serializable {
 
     private static final long serialVersionUID = -8544233980065788815L;
@@ -44,6 +43,7 @@ public class User implements Serializable {
     @NotBlank
     @NonNull
     @Column(name = "password")
+    @JsonIgnore
     @Size(min = 6, max = 100)
     private String password;
 
