@@ -68,6 +68,12 @@ public class User implements Serializable {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Column(name = "token_expired")
+    private boolean tokenExpired;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Post> posts = new HashSet<>();
@@ -77,7 +83,7 @@ public class User implements Serializable {
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 

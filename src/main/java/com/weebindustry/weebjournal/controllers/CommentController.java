@@ -29,7 +29,7 @@ public class CommentController {
     @Autowired
     private HelperService<Comment> singleRepositoryService;
 
-    @GetMapping(path = "/posts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/comments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> findAllComments(Pageable pageable,@RequestParam(required = false, defaultValue = "false") String hasPageable) {
         if (hasPageable.equals("true")) {
             return ResponseEntity.ok(singleRepositoryService.findAll(pageable));
@@ -43,24 +43,24 @@ public class CommentController {
 
     }
 
-    @GetMapping(path = "/posts/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/comments/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Comment> findCommentById(@PathVariable(value = "id") Long id) {
         Comment post = singleRepositoryService.findById(id);
         return ResponseEntity.ok(post);
     }
 
-    @PostMapping("/posts")
+    @PostMapping("/comments")
     public ResponseEntity<Comment> createComment(@Valid @RequestBody @DTO(CommentCreatableDTO.class) Comment comment) {
         return ResponseEntity.ok(singleRepositoryService.create(comment));
     }
 
-    @PutMapping("posts/{id}")
+    @PutMapping("comments/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long id, @Valid @RequestBody @DTO(CommentUpdatableDTO.class) Comment comment) {
         return ResponseEntity.ok(singleRepositoryService.update(id, comment));
     }
 
 
-    @DeleteMapping("posts/{id}")
+    @DeleteMapping("comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable(value = "id") Long id) {
         singleRepositoryService.delete(id);
         return ResponseEntity.ok().build();

@@ -58,4 +58,7 @@ public class Post implements Serializable {
     @OneToMany(mappedBy="post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
+
+
+
 }
