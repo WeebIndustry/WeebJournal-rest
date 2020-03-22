@@ -26,12 +26,11 @@ import java.util.Optional;
 @RequestMapping("/api/")
 public class PostController {
 
-    private final HelperServiceOneToMany<Post> service;
 
     private final HelperService<Post> singleRepositoryService;
 
-    public PostController(HelperServiceOneToMany<Post> service, HelperService<Post> singleRepositoryService) {
-        this.service = service;
+    public PostController(@Qualifier("PostService") HelperService<Post> singleRepositoryService) {
+
         this.singleRepositoryService = singleRepositoryService;
     }
 
@@ -73,28 +72,5 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/users/{id}/posts")
-    public ResponseEntity<Page<Post>> findAllPostsByUserId(@PathVariable(value = "id") Long userId, Pageable pageable) {
-        return ResponseEntity.ok(service.getManyByOne(userId, pageable));
-    }
 
-    @PostMapping("/users/{id}/posts")
-    public ResponseEntity<Post> createPost(@PathVariable(value = "id") Long userId,
-            @Valid @RequestBody @DTO(PostCreatableDTO.class) Post post) {
-        return ResponseEntity.ok(service.create(userId, post));
-    }
-
-    @PutMapping("/users/{userId}/posts/{postId}")
-    public ResponseEntity<Post> updatePost(@PathVariable(value = "userId") Long userId,
-            @PathVariable(value = "postId") Long postId, @Valid @RequestBody @DTO(PostUpdatableDTO.class) Post post) {
-        return ResponseEntity.ok(service.update(userId, postId, post));
-    }
-
-    @DeleteMapping("users/{userId}/posts/{postId}")
-    public ResponseEntity<?> deleteComment(@PathVariable(value = "userId") Long userId,
-            @PathVariable(value = "postId") Long postId) {
-        service.delete(userId, postId);
-
-        return ResponseEntity.ok().build();
-    }
 }

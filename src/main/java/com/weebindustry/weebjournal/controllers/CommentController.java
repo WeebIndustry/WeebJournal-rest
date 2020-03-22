@@ -11,6 +11,7 @@ import com.weebindustry.weebjournal.util.DTO;
 import com.weebindustry.weebjournal.util.HelperService;
 import com.weebindustry.weebjournal.util.HelperServiceOneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -23,11 +24,12 @@ import javax.validation.Valid;
 @RequestMapping("/api/")
 public class CommentController {
 
-    @Autowired
-    private HelperServiceOneToMany<Comment> commentService;
 
-    @Autowired
-    private HelperService<Comment> singleRepositoryService;
+    private final HelperService<Comment> singleRepositoryService;
+
+    public CommentController(@Qualifier("CommentService") HelperService<Comment> singleRepositoryService) {
+        this.singleRepositoryService = singleRepositoryService;
+    }
 
     @GetMapping(path = "/comments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> findAllComments(Pageable pageable,@RequestParam(required = false, defaultValue = "false") String hasPageable) {
@@ -63,27 +65,6 @@ public class CommentController {
     @DeleteMapping("comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable(value = "id") Long id) {
         singleRepositoryService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/posts/{id}/comments")
-    public Page<Comment> getAllCommentsByPostId(@PathVariable(value = "id") Long postId, Pageable pageable) {
-        return commentService.getManyByOne(postId, pageable);
-    }
-
-    @PostMapping("/posts/{id}/comments")
-    public Comment createComment(@PathVariable(value = "id") Long postId, @Valid @RequestBody @DTO(CommentCreatableDTO.class) Comment comment) {
-        return commentService.create(postId, comment);
-    }
-
-    @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Comment updateComment(@PathVariable(value = "postId") Long postId, @PathVariable(value = "commentId") Long commentId, @Valid @RequestBody @DTO(CommentCreatableDTO.class) Comment comment) {
-        return commentService.update(postId, commentId, comment);
-    }
-
-    @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable(value = "postId") Long postId, @PathVariable(value = "commentId") Long commentId) {
-        commentService.delete(postId, commentId);
         return ResponseEntity.ok().build();
     }
 

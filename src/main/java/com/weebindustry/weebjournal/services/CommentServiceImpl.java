@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Service
+@Service("CommentService")
 public class CommentServiceImpl implements HelperServiceOneToMany<Comment>, HelperService<Comment> {
 
     @Autowired

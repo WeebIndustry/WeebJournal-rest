@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("PostService")
 public class PostServiceImpl implements HelperService<Post>, HelperServiceOneToMany<Post> {
 
     @Autowired

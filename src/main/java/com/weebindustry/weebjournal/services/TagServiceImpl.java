@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("TagService")
 public class TagServiceImpl implements HelperService<Tag> {
 
     private final TagRepository repo;
