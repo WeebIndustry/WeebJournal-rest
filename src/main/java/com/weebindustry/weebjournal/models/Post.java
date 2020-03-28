@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.weebindustry.weebjournal.models.audit.UserDateAudit;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -19,7 +20,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "posts")
-public class Post implements Serializable {
+public class Post extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = 7441073095469088061L;
 
@@ -34,14 +35,6 @@ public class Post implements Serializable {
     @Column(name = "post_content")
     private String content;
 
-    @Column(name = "date_created", columnDefinition = "timestamp default current_timestamp")
-    private Date dateCreated;
-
-    @Column(name = "votes", columnDefinition = "integer default 0")
-    private int votes;
-
-    @Column(name = "saved", columnDefinition = "integer default 0")
-    private int saved;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

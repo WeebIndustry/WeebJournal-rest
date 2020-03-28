@@ -1,6 +1,9 @@
 package com.weebindustry.weebjournal.models;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.weebindustry.weebjournal.models.audit.DateAudit;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ManyToAny;
@@ -26,7 +30,8 @@ import org.hibernate.annotations.NaturalId;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
-public class User implements Serializable {
+@Builder
+public class User extends DateAudit implements Serializable {
 
     private static final long serialVersionUID = -8544233980065788815L;
 
@@ -47,32 +52,21 @@ public class User implements Serializable {
     @Size(min = 6, max = 100)
     private String password;
 
-    @Column(name = "joined_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date joinedDate;
-
     @NaturalId
     @Column(name = "email")
     @NonNull
     @Email
     private String email;
 
-    @Column(name = "biography")
+    @Column(name = "biography", nullable = true)
     private String biography;
 
-    @Column(name = "displayname")
+    @Column(name = "displayname", nullable = true)
     @Size(min = 3, max = 50)
-    @NonNull
     private String displayname;
 
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = true)
     private Date dateOfBirth;
-
-    @Column(name = "enabled")
-    private boolean enabled;
-
-    @Column(name = "token_expired")
-    private boolean tokenExpired;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -87,4 +81,7 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
+    public static User of(String username, String password, String email) throws ParseException {
+        return User.builder().username(username).password(password).email(email).build();
+    }
 }

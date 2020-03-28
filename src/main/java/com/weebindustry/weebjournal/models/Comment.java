@@ -28,9 +28,6 @@ public class Comment {
     @Column(name = "comment")
     private String comment;
 
-    @Column(name = "votes", columnDefinition = "integer default 0")
-    private int votes;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
