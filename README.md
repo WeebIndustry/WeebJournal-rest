@@ -6,7 +6,10 @@
 * [Contributing](#contributing)
 * [Needs for help](#needs-for-help)
 
-# WeebJournal-rest ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
+# WeebJournal-rest 
+![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   
+![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
+
 
 The community for anime artisan, a future sekai of Weebs!
 
@@ -15,22 +18,16 @@ This is only the RestAPI Microservice of WeebJournal not the entire website!
 
 ## Tech stack
 
-- Java 
-- Spring Boot
-- Postgresql
-- Docker + Kubernetes
+- Java 8
+- Spring Boot 2.1.6 Release
+- Postgresql 11
+- Docker + Kubernetes 
 - Elasticsearch + Kibana
 - TeamCity
 
-
 ## Getting Started
 
-1. Tools:
-
-
-## Getting Started
-
-1. How to contribute to this repo
+1. How to contribute to this repo?
 
 - Fork this repo to your own one
 - Create a new branch which follows this format `wj-<YourName>-<pull_request_name_or_some_tag_you_want>`. For instance: `wj-Aragami1408-add_sharing_post_feature`
