@@ -22,4 +22,5 @@ ENV DB_PWD=$DB_PWD
 ADD ${JAR_FILE} weebjournal.jar
 
 
-ENTRYPOINT [ "java", "-jar", "weebjournal.jar", "--spring.jpa.database=POSTGRESQL", "--spring.datasource.platform=postgres", "--spring.datasource.url=$DB_URL", "--spring.datasource.username=$DB_UNAME", "--spring.jpa.show-sql=true", "--spring.jpa.generate-dll=true", "--spring.jpa.hibernate.dll-auto=update", "--spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true"]
+
+ENTRYPOINT ["java", "-jar", "weebjournal.jar", "--spring.jpa.database=POSTGRESQL", "--spring.datasource.platform=postgres", "--spring.datasource.url=$DB_URL", "--spring.datasource.username=$DB_UNAME", "--spring.jpa.show-sql=true", "--spring.jpa.generate-dll=true", "--spring.jpa.hibernate.dll-auto=update", "--spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true"]

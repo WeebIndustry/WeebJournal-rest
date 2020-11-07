@@ -1,104 +1,55 @@
 package com.weebindustry.weebjournal.controllers;
 
-import com.weebindustry.weebjournal.exceptions.UserRoleNotFoundException;
-import com.weebindustry.weebjournal.models.Role;
-import com.weebindustry.weebjournal.models.RoleName;
-import com.weebindustry.weebjournal.models.User;
-import com.weebindustry.weebjournal.payload.general.ApiResponse;
-import com.weebindustry.weebjournal.payload.general.MessageResponse;
-import com.weebindustry.weebjournal.payload.jwt.JwtAuthenticationResponse;
-import com.weebindustry.weebjournal.payload.jwt.LoginRequest;
-import com.weebindustry.weebjournal.payload.jwt.SignUpRequest;
-import com.weebindustry.weebjournal.repositories.RoleRepository;
-import com.weebindustry.weebjournal.repositories.UserRepository;
-import com.weebindustry.weebjournal.security.JwtUtils;
-import com.weebindustry.weebjournal.security.UserPrincipal;
+import com.weebindustry.weebjournal.dto.AuthenticationResponse;
+import com.weebindustry.weebjournal.dto.LoginRequest;
+import com.weebindustry.weebjournal.dto.RefreshTokenRequest;
+import com.weebindustry.weebjournal.dto.RegisterRequest;
+import com.weebindustry.weebjournal.service.AuthService;
+import com.weebindustry.weebjournal.service.RefreshTokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.text.ParseException;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
+    @Autowired
+    private AuthService authService;
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
-    private final UserRepository userRepository;
-
-    private final RoleRepository roleRepository;
-
-    private final PasswordEncoder encoder;
-
-    private final JwtUtils jwtUtils;
-
-
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.encoder = encoder;
-        this.jwtUtils = jwtUtils;
+    @PostMapping("/signup")
+    public ResponseEntity signup(@RequestBody RegisterRequest registerRequest) {
+        authService.signUp(registerRequest);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws ParseException {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/accountVerification/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token) {
+        authService.verifyAccount(token);
+        return new ResponseEntity<String>("Account Activated Successfully", HttpStatus.OK);
+    }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/refresh/token")
+    public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return authService.refreshToken(refreshTokenRequest);
+    }
 
-        User user = User
-                .of(
-                        signUpRequest.getUsername(),
-                        encoder.encode(signUpRequest.getPassword()),
-                        signUpRequest.getEmail()
-                );
-
-        Role userRole = roleRepository.findByName(RoleName.ROLE_MEMBER).orElseThrow(() -> new UserRoleNotFoundException(RoleName.ROLE_MEMBER));
-
-        user.setRoles(Collections.singleton(userRole));
-
-        User result = userRepository.save(user);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(result.getUsername()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!");
     }
 }

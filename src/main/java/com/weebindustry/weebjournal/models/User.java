@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 
 import javax.persistence.*;
@@ -15,11 +16,11 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import com.weebindustry.weebjournal.models.audit.DateAudit;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.NaturalId;
+import org.springframework.context.annotation.Configuration;
 
 @Data
 @NoArgsConstructor
@@ -31,13 +32,14 @@ import org.hibernate.annotations.NaturalId;
         @UniqueConstraint(columnNames = {"email"})
 })
 @Builder
-public class User extends DateAudit implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = -8544233980065788815L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "user_id")
+    private Long userId;
 
     @NotBlank
     @NonNull
@@ -52,36 +54,15 @@ public class User extends DateAudit implements Serializable {
     @Size(min = 6, max = 100)
     private String password;
 
-    @NaturalId
     @Column(name = "email")
     @NonNull
     @Email
+
     private String email;
 
-    @Column(name = "biography", nullable = true)
-    private String biography;
+    @Column(name = "created_date")
+    private Instant created;
 
-    @Column(name = "displayname", nullable = true)
-    @Size(min = 3, max = 50)
-    private String displayname;
-
-    @Column(name = "date_of_birth", nullable = true)
-    private Date dateOfBirth;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Post> posts = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Comment> comments = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
-    private Set<Role> roles = new HashSet<>();
-
-    public static User of(String username, String password, String email) throws ParseException {
-        return User.builder().username(username).password(password).email(email).build();
-    }
+    @Column(name = "enabled")
+    private boolean enabled;
 }
