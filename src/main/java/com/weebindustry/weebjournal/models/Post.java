@@ -1,18 +1,21 @@
 package com.weebindustry.weebjournal.models;
 
+import java.time.Instant;
 import java.util.*;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.weebindustry.weebjournal.models.audit.UserDateAudit;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.*;
 
 import lombok.*;
+import org.springframework.scheduling.support.SimpleTriggerContext;
 
 @Data
 @NoArgsConstructor
@@ -20,38 +23,39 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "posts")
-public class Post extends UserDateAudit implements Serializable {
+public class Post implements Serializable {
 
     private static final long serialVersionUID = 7441073095469088061L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "post_id")
+    private Long postId;
 
     @Column(name = "post_title")
+    @NotBlank(message = "Post Title cannot be empty no Null")
     private String title;
 
+    @Column(name = "url")
+    @Nullable
+    private String url;
+
     @Column(name = "post_content")
+    @Nullable
+    @Lob
     private String content;
 
+    @Column(name = "vote_count")
+    private Integer voteCount;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
+    @Column(name = "created_date")
+    private Instant createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "user_id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "post_tags", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "tag_id") })
-    @JsonIgnore
-    private Set<Tag> tags = new HashSet<>();
-
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Comment> comments = new HashSet<>();
-
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "boardId", referencedColumnName = "board_id")
+    private Board board;
 }
