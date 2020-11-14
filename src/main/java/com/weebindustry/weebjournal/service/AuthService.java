@@ -12,6 +12,7 @@ import com.weebindustry.weebjournal.repositories.UserRepository;
 import com.weebindustry.weebjournal.repositories.VerificationTokenRepository;
 import com.weebindustry.weebjournal.security.JwtProvider;
 import com.weebindustry.weebjournal.util.AppConstants;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,28 +29,29 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
 
-    @Autowired
-    private RefreshTokenService refreshTokenService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private MailService mailService;
+
+    private final JwtProvider jwtProvider;
+
+
+    private final VerificationTokenRepository verificationTokenRepository;
+
+
+    private final RefreshTokenService refreshTokenService;
+
+
+    private final MailService mailService;
 
 
 
