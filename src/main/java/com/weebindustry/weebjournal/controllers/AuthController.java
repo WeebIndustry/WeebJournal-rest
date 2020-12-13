@@ -6,24 +6,24 @@ import com.weebindustry.weebjournal.dto.RefreshTokenRequest;
 import com.weebindustry.weebjournal.dto.RegisterRequest;
 import com.weebindustry.weebjournal.service.AuthService;
 import com.weebindustry.weebjournal.service.RefreshTokenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
-    @Autowired
-    private AuthService authService;
+    
+    private final AuthService authService;
 
-    @Autowired
-    private RefreshTokenService refreshTokenService;
+
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody RegisterRequest registerRequest) {

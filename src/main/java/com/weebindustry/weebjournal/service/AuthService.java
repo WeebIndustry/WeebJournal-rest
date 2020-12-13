@@ -13,7 +13,6 @@ import com.weebindustry.weebjournal.repositories.VerificationTokenRepository;
 import com.weebindustry.weebjournal.security.JwtProvider;
 import com.weebindustry.weebjournal.util.AppConstants;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
