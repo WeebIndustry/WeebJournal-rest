@@ -2,6 +2,7 @@ package com.weebindustry.weebjournal.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Data;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "comments")
 @Data
@@ -20,26 +23,21 @@ import lombok.Data;
 @EqualsAndHashCode(callSuper = false)
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
-    @Column(name = "comment")
-    private String comment;
+    @NotEmpty
+    @Column(name = "comment_text")
+    private String text;
 
-    @Column(name = "votes", columnDefinition = "integer default 0")
-    private int votes;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    private Instant createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId", referencedColumnName = "post_id")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "user_id")
     private User user;
 }
