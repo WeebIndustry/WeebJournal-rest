@@ -1,21 +1,14 @@
 package com.weebindustry.weebjournal.models;
 
 import java.time.Instant;
-import java.util.*;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import java.io.*;
 
 import lombok.*;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 
 @Data
 @NoArgsConstructor

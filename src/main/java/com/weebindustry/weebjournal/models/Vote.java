@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Entity
 @Builder
 public class Vote implements Serializable {
+    private static final long serialVersionUID = -3711650067578154870L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "vote_id")

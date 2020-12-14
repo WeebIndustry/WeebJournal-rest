@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.time.Instant;
-import java.util.Date;
 
 import static io.jsonwebtoken.Jwts.parser;
 import static java.util.Date.from;
@@ -40,21 +39,14 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication) {
         User principal = (User) authentication.getPrincipal();
-        return Jwts.builder()
-                .setSubject(principal.getUsername())
-                .setIssuedAt(from(Instant.now()))
-                .signWith(getPrivateKey())
-                .setExpiration(from(Instant.now().plusMillis(jwtExpirationInMillis)))
+        return Jwts.builder().setSubject(principal.getUsername()).setIssuedAt(from(Instant.now()))
+                .signWith(getPrivateKey()).setExpiration(from(Instant.now().plusMillis(jwtExpirationInMillis)))
                 .compact();
     }
 
     public String generateTokenWithUserName(String username) {
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(from(Instant.now()))
-                .signWith(getPrivateKey())
-                .setExpiration(from(Instant.now().plusMillis(jwtExpirationInMillis)))
-                .compact();
+        return Jwts.builder().setSubject(username).setIssuedAt(from(Instant.now())).signWith(getPrivateKey())
+                .setExpiration(from(Instant.now().plusMillis(jwtExpirationInMillis))).compact();
     }
 
     private PrivateKey getPrivateKey() {
@@ -74,16 +66,12 @@ public class JwtProvider {
         try {
             return keyStore.getCertificate("springblog").getPublicKey();
         } catch (KeyStoreException e) {
-            throw new WeebJournalException("Exception occured while " +
-                    "retrieving public key from keystore", e);
+            throw new WeebJournalException("Exception occured while " + "retrieving public key from keystore", e);
         }
     }
 
     public String getUsernameFromJwt(String token) {
-        Claims claims = parser()
-                .setSigningKey(getPublickey())
-                .parseClaimsJws(token)
-                .getBody();
+        Claims claims = parser().setSigningKey(getPublickey()).parseClaimsJws(token).getBody();
 
         return claims.getSubject();
     }
