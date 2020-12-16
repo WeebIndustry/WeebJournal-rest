@@ -22,7 +22,7 @@ This is only the RestAPI Microservice of WeebJournal not the entire website!
 - Postgresql 11
 - Docker + Kubernetes 
 - Elasticsearch + Kibana (Not implemented yet)
-- TeamCity
+- Travis CI
 
 ## Contribution
 
