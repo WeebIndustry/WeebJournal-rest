@@ -22,11 +22,9 @@ import com.weebindustry.weebjournal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 @Transactional
 public class PostService {
     private final PostRepository postRepository;
@@ -36,9 +34,8 @@ public class PostService {
     private final PostMapper postMapper;
 
     public void save(PostRequest postRequest) {
-        Board board = boardRepository
-            .findByName(postRequest.getBoardName())
-            .orElseThrow(() -> new WeebJournalException(postRequest.getBoardName()));
+        Board board = boardRepository.findByName(postRequest.getBoardName())
+                .orElseThrow(() -> new WeebJournalException(postRequest.getBoardName()));
 
         postRepository.save(postMapper.map(postRequest, board, authService.getCurrentUser()));
     }
@@ -51,29 +48,20 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts() {
-        return postRepository.findAll()
-            .stream()
-            .map(postMapper::mapToDto)
-            .collect(Collectors.toList());
+        return postRepository.findAll().stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<PostResponse> getPostsByBoard(Long boardId) {
         Board board = boardRepository.findById(boardId)
-            .orElseThrow(() -> new BoardNotFoundException(boardId.toString()));
-        return postRepository.findAllByBoard(board)
-            .stream()
-            .map(postMapper::mapToDto).collect(Collectors.toList());
+                .orElseThrow(() -> new BoardNotFoundException(boardId.toString()));
+        return postRepository.findAllByBoard(board).stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<PostResponse> getPostsByUsername(String username) {
-        User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException(username));
-        return postRepository.findByUser(user)
-            .stream()
-            .map(postMapper::mapToDto)
-            .collect(Collectors.toList());
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return postRepository.findByUser(user).stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
-    
+
 }

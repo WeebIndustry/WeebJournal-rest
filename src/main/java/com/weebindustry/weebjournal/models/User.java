@@ -1,36 +1,24 @@
 package com.weebindustry.weebjournal.models;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.annotations.NaturalId;
-import org.springframework.context.annotation.Configuration;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username"}),
-        @UniqueConstraint(columnNames = {"email"})
-})
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+        @UniqueConstraint(columnNames = { "email" }) })
 @Builder
 public class User implements Serializable {
 

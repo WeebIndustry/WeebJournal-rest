@@ -15,6 +15,8 @@ import java.util.List;
 @Builder
 @Table(name = "boards")
 public class Board implements Serializable {
+    private static final long serialVersionUID = 8994425524708923780L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "board_id")

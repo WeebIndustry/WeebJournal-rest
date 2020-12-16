@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/board")
 @AllArgsConstructor
-@Slf4j
 public class BoardController {
 
     private final BoardService boardService;

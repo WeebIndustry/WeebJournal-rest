@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final AuthService authService;
     private final BoardMapper boardMapper;
 
     @Transactional
@@ -35,9 +33,11 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
-    public BoardDTO getSubreddit(Long id) {
+    public BoardDTO getBoard(Long id) {
         Board subreddit = boardRepository.findById(id)
                 .orElseThrow(() -> new WeebJournalException("No subreddit found with ID - " + id));
         return boardMapper.mapBoardToDTO(subreddit);
     }
+
+    
 }
