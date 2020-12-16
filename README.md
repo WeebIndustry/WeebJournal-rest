@@ -8,7 +8,7 @@
 # WeebJournal-rest 
 ![Discord](https://img.shields.io/discord/545517032272036009.svg?style=flat)   
 ![MIT license](https://img.shields.io/github/license/WeebIndustry/WeebJournal)
-
+![Travis CI](https://travis-ci.org/WeebIndustry/WeebJournal-rest.svg?branch=master)
 
 The another world for Otakus, alternative to 4chan!
 
