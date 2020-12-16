@@ -1,5 +1,6 @@
 package com.weebindustry.weebjournal.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,6 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    @Bean
     public Docket weebjournalApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
